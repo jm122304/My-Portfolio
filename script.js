@@ -2,9 +2,9 @@
 const PHOTO="assets/profile.png";
 const EMAIL="tan.johnmichaelg10@gmail.com";
 const PROJECTS=[
- {t:"BroShop",c:"Full-stack",d:"Browse and filter a sample catalog, manage a shopping cart, and try the demo checkout.",s:["Product Catalog","Cart","Demo Checkout"],g:"linear-gradient(135deg,#2a1066,#6b2bd1)",url:"projects/broshop.html"},
- {t:"BroTasks",c:"Web App",d:"Create, organize, search, and filter tasks across a simple workflow. Tasks save in your browser.",s:["Task Manager","Local Storage","Drag and Drop"],g:"linear-gradient(135deg,#1b1038,#3d2a8f)",url:"projects/brotasks.html"},
- {t:"BroCrypto",c:"Dashboard",d:"Explore a simulated crypto dashboard with portfolio tracking, conversion, watchlists, and price charts.",s:["Dashboard","Portfolio","Simulated Data"],g:"linear-gradient(135deg,#052a33,#0e6b73)",url:"projects/brocrypto.html"}
+ {t:"BroShop",c:"Full-stack",d:"Browse and filter a sample catalog, manage a shopping cart, and try the demo checkout.",s:["Product Catalog","Cart","Demo Checkout"],g:"linear-gradient(135deg,#2a1066,#6b2bd1)",url:"projects/broshop.html",preview:"assets/broshop-preview.png"},
+ {t:"BroTasks",c:"Web App",d:"Create, organize, search, and filter tasks across a simple workflow. Tasks save in your browser.",s:["Task Manager","Local Storage","Drag and Drop"],g:"linear-gradient(135deg,#1b1038,#3d2a8f)",url:"projects/brotasks.html",preview:"assets/brotasks-preview.png"},
+ {t:"BroCrypto",c:"Dashboard",d:"Explore a simulated crypto dashboard with portfolio tracking, conversion, watchlists, and price charts.",s:["Dashboard","Portfolio","Simulated Data"],g:"linear-gradient(135deg,#052a33,#0e6b73)",url:"projects/brocrypto.html",preview:"assets/brocrypto-preview.png"}
 ];
 const STATS=[["4+","Years Experience"],["50+","Projects Completed"],["30+","Happy Clients"],["100%","Client Satisfaction"]];
 const SVC=[["🎨","Web design & development","Strategy, UX, visual design, and clean frontend development—shaped into one focused experience that feels distinctly yours.",["UX/UI","React","Next.js"]],
@@ -20,7 +20,7 @@ const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelecto
 const FALLBACK="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='38' r='17' fill='%23d9b8ff'/%3E%3Cpath d='M12 100c2-30 18-40 38-40s36 10 38 40z' fill='%23d9b8ff'/%3E%3C/svg%3E";
 $$('.me').forEach(i=>{i.src=PHOTO||FALLBACK;i.onerror=()=>{i.onerror=null;i.src=FALLBACK}});
 
-const card=(p,i)=>`<article class="pc"><div class="shot" style="--g:${p.g}"><span></span></div><div class="pb"><div class="row"><span class="num">0${i+1}</span><span class="arr">↗</span></div><h3>${p.t}</h3><p>${p.d}</p><div class="project-actions"><a class="link" href="${p.url}" target="_blank" rel="noopener">Open demo ↗</a><button class="link" data-p="${PROJECTS.indexOf(p)}">Details</button></div></div></article>`;
+const card=(p,i)=>`<article class="pc"><div class="shot" style="--g:${p.g}"><img src="${p.preview}" alt="${p.t} project preview" loading="lazy"></div><div class="pb"><div class="row"><span class="num">0${i+1}</span><span class="arr">↗</span></div><h3>${p.t}</h3><p>${p.d}</p><div class="project-actions"><a class="link" href="${p.url}" target="_blank" rel="noopener">Open demo ↗</a><button class="link" data-p="${PROJECTS.indexOf(p)}">Details</button></div></div></article>`;
 function fill(el,list){el.innerHTML=list.map(card).join("");const d=el.nextElementSibling;if(d&&d.classList.contains("dots")){d.innerHTML=list.map((_,i)=>`<i class="${i?"":"on"}"></i>`).join("");el.onscroll=()=>{const k=Math.round(el.scrollLeft/(el.scrollWidth/list.length));$$("i",d).forEach((x,j)=>x.classList.toggle("on",j===k))}}}
 $$('[data-projects]').forEach(e=>fill(e,PROJECTS.slice(0,+e.dataset.projects)));
 fill($("#allp"),PROJECTS);
@@ -35,7 +35,7 @@ $("#steps").innerHTML=STEPS.map((s,i)=>`<div class="step"><div class="row"><span
 const pd=$("#pd"),cd=$("#cd");
 document.addEventListener("click",e=>{
  const p=e.target.closest("[data-p]");
- if(p){const o=PROJECTS[p.dataset.p];$("#pdShot").style.setProperty("--g",o.g);$("#pdT").textContent=o.t;$("#pdD").textContent=o.d;$("#pdTg").innerHTML=o.s.map(t=>`<i>${t}</i>`).join("");pd.showModal()}
+ if(p){const o=PROJECTS[p.dataset.p];$("#pdShot").innerHTML=`<img src="${o.preview}" alt="${o.t} project preview">`;$("#pdT").textContent=o.t;$("#pdD").textContent=o.d;$("#pdTg").innerHTML=o.s.map(t=>`<i>${t}</i>`).join("");pd.showModal()}
  if(e.target.closest("[data-contact]")){$("#menu").setAttribute("aria-expanded",false);$("#nav").classList.remove("open");cd.showModal()}
  if(e.target.closest("[data-close]"))e.target.closest("dialog").close();
  if(e.target===pd||e.target===cd)e.target.close();
