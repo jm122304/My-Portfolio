@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BroShop | Simple Online Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07071a;--panel:#11112b;--line:#26264a;--text:#f2f2fa;--mute:#9a9ab8;--accent:#7b5cf5;--accent2:#a21fff;--ok:#2bd48a;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
+*,*::before,*::after{box-sizing:inherit;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;line-height:1.5;overflow-x:hidden;min-height:100vh}
+button{font-family:inherit;cursor:pointer;color:inherit}
+:focus-visible{outline:2px solid #ffe600;outline-offset:2px}
+.wrap{width:min(1180px,100% - 32px);margin-inline:auto}
+h1,h2,h3,.price{font-family:Manrope,Inter,sans-serif}
+
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:#000d;backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:14px;padding:12px 0}
+.logo{font-family:Manrope;font-weight:800;font-size:1.3rem;white-space:nowrap}.logo b{color:var(--accent2)}
+.search{flex:1;max-width:520px;margin-inline:auto}
+input,select,textarea{width:100%;background:#0a0a22;border:1px solid var(--line);border-radius:10px;color:var(--text);padding:10px 14px;font:inherit;font-size:.92rem}
+.cartbtn{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:9px 14px;font-weight:600;white-space:nowrap}
+.cartbtn i{position:absolute;top:-8px;right:-8px;min-width:20px;height:20px;border-radius:99px;background:var(--accent2);font-size:.72rem;font-style:normal;display:grid;place-items:center;padding:0 5px}
+
+.hero{margin:22px auto;border-radius:22px;padding:42px 36px;background:radial-gradient(circle at 90% 20%,#5b2bd1,transparent 55%),linear-gradient(135deg,#1a0f45,#0d0b2c);border:1px solid #33337a}
+.hero h1{font-size:clamp(1.7rem,4.4vw,3rem);line-height:1.15;max-width:560px}
+.hero p{color:#cfcfe8;margin:10px 0 0;max-width:460px}
+
+.tools{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin:26px auto 18px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chips button{background:none;border:1px solid var(--line);color:var(--mute);padding:7px 15px;border-radius:99px;font-size:.84rem}
+.chips button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.tools select{width:auto}
+
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;padding-bottom:60px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,border-color .2s}
+.card:hover{transform:translateY(-4px);border-color:var(--accent)}
+.img{height:150px;display:grid;place-items:center;font-size:4rem;background:var(--g);position:relative}
+.tag{position:absolute;top:10px;left:10px;font-size:.68rem;font-weight:600;background:#000a;border-radius:99px;padding:3px 10px}
+.body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:4px;flex:1}
+.body h3{font-size:.98rem}.meta{color:var(--mute);font-size:.78rem}
+.foot{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:10px}
+.price{font-weight:800;font-size:1.08rem}
+.add{background:var(--accent);border:0;border-radius:9px;padding:8px 14px;font-weight:600;font-size:.84rem;transition:filter .2s}
+.add:hover{filter:brightness(1.15)}
+.empty{grid-column:1/-1;text-align:center;color:var(--mute);padding:60px 0}
+
+/* drawer */
+.ov{position:fixed;inset:0;background:#000a;opacity:0;pointer-events:none;transition:opacity .25s;z-index:40}
+.ov.on{opacity:1;pointer-events:auto}
+aside{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:var(--panel);border-left:1px solid var(--line);z-index:50;transform:translateX(100%);transition:transform .3s;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px)}
+aside.on{transform:none}
+.dh{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;border-bottom:1px solid var(--line)}
+.x{background:none;border:0;font-size:1.4rem;color:var(--mute)}
+.items{flex:1;overflow-y:auto;padding:12px 20px}
+.it{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.it .th{width:56px;height:56px;border-radius:12px;display:grid;place-items:center;font-size:1.8rem;background:var(--g);flex:none}
+.it .in{flex:1;min-width:0}.it h4{font-size:.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qty{display:flex;align-items:center;gap:8px;margin-top:4px}
+.qty button{width:26px;height:26px;border-radius:7px;border:1px solid var(--line);background:none}
+.rm{background:none;border:0;color:#ff6b81;font-size:.78rem}
+.sum{padding:18px 20px calc(18px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line)}
+.ln{display:flex;justify-content:space-between;font-size:.9rem;color:var(--mute);margin-bottom:6px}
+.ln.t{color:var(--text);font-weight:700;font-size:1.1rem;margin:10px 0 14px}
+.btn{width:100%;background:var(--accent);border:0;border-radius:11px;padding:13px;font-weight:600;font-size:.98rem}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.note{font-size:.76rem;color:var(--ok);margin-bottom:8px}
+
+dialog{margin:auto;background:var(--panel);color:var(--text);border:1px solid var(--accent);border-radius:18px;padding:26px;width:min(460px,92%)}
+dialog::backdrop{background:#000b}
+dialog h3{font-size:1.3rem;margin-bottom:12px}
+label{display:block;font-size:.8rem;color:var(--mute);margin:12px 0 4px}
+.ok{text-align:center}.ok .big{font-size:3rem}.ok p{color:var(--mute);margin:8px 0 18px}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,30px);background:#fff;color:#111;padding:10px 18px;border-radius:99px;font-weight:600;font-size:.88rem;opacity:0;transition:.3s;z-index:60;pointer-events:none}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+footer{border-top:1px solid var(--line);text-align:center;color:var(--mute);font-size:.82rem;padding:22px}
+
+@media(max-width:980px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:720px){.grid{grid-template-columns:repeat(2,1fr);gap:12px}.bar{flex-wrap:wrap}.search{order:3;flex-basis:100%;max-width:none}.cartbtn{margin-left:auto}.hero{padding:28px 22px}.img{height:120px;font-size:3.2rem}.tools select{width:100%}}
+@media(max-width:380px){.grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header><div class="wrap bar">
+  <div class="logo">Bro<b>Shop</b></div>
+  <div class="search"><input id="q" type="search" placeholder="Search products…" aria-label="Search products"></div>
+  <button class="cartbtn" id="open" aria-label="Open cart">🛒 Cart<i id="cnt">0</i></button>
+</div></header>
+
+<main class="wrap">
+  <section class="hero"><h1>Everyday tech &amp; gear, delivered to your door.</h1><p>Free shipping on orders over ₱2,000. Pay with cash on delivery, GCash, or card.</p></section>
+  <div class="tools"><div class="chips" id="chips"></div>
+    <select id="sort" aria-label="Sort products"><option value="f">Featured</option><option value="lo">Price: low to high</option><option value="hi">Price: high to low</option><option value="r">Top rated</option></select></div>
+  <div class="grid" id="grid"></div>
+</main>
+<footer>© 2026 BroShop. Demo store — no real payments are processed.</footer>
+
+<div class="ov" id="ov"></div>
+<aside id="cart" aria-label="Shopping cart" aria-hidden="true">
+  <div class="dh"><h3>Your cart</h3><button class="x" id="close" aria-label="Close cart">✕</button></div>
+  <div class="items" id="items"></div>
+  <div class="sum">
+    <div class="note" id="note"></div>
+    <div class="ln"><span>Subtotal</span><span id="sub"></span></div>
+    <div class="ln"><span>Shipping</span><span id="ship"></span></div>
+    <div class="ln t"><span>Total</span><span id="tot"></span></div>
+    <button class="btn" id="co" disabled>Checkout</button>
+  </div>
+</aside>
+
+<dialog id="dlg"><div id="dbody"></div></dialog>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const CUR="₱",FREE=2000,SHIP=150;
+const P=[
+{id:1,n:"Wireless Earbuds",c:"Audio",p:1499,r:4.6,e:"🎧",g:"#5b2bd1,#2a1066"},
+{id:2,n:"Mechanical Keyboard",c:"Computing",p:2899,r:4.8,e:"⌨️",g:"#0e6b73,#052a33"},
+{id:3,n:"Smart Watch",c:"Wearables",p:3499,r:4.5,e:"⌚",g:"#c2410c,#431407"},
+{id:4,n:"Gaming Mouse",c:"Computing",p:999,r:4.4,e:"🖱️",g:"#1d4ed8,#172554"},
+{id:5,n:"Bluetooth Speaker",c:"Audio",p:1799,r:4.7,e:"🔊",g:"#be185d,#500724"},
+{id:6,n:"Power Bank 20,000mAh",c:"Accessories",p:1199,r:4.3,e:"🔋",g:"#15803d,#052e16"},
+{id:7,n:"4K Webcam",c:"Computing",p:2299,r:4.2,e:"📷",g:"#6d28d9,#2e1065"},
+{id:8,n:"Laptop Backpack",c:"Accessories",p:1599,r:4.6,e:"🎒",g:"#a16207,#422006"},
+{id:9,n:"Fitness Band",c:"Wearables",p:1299,r:4.1,e:"📿",g:"#0f766e,#042f2e"},
+{id:10,n:"Studio Headphones",c:"Audio",p:4299,r:4.9,e:"🎙️",g:"#7e22ce,#3b0764"},
+{id:11,n:"USB-C Hub",c:"Accessories",p:899,r:4.4,e:"🔌",g:"#334155,#0f172a"},
+{id:12,n:"27\" Monitor",c:"Computing",p:8999,r:4.7,e:"🖥️",g:"#1e40af,#1e1b4b"}];
+const $=s=>document.querySelector(s),money=n=>CUR+n.toLocaleString("en-PH");
+let cat="All",cart={};
+try{cart=JSON.parse(localStorage.getItem("cart"))||{}}catch(e){}
+const save=()=>{try{localStorage.setItem("cart",JSON.stringify(cart))}catch(e){}};
+const byId=id=>P.find(p=>p.id==id);
+
+/* catalog */
+const cats=["All",...new Set(P.map(p=>p.c))];
+$("#chips").innerHTML=cats.map(c=>`<button class="${c=="All"?"on":""}">${c}</button>`).join("");
+$("#chips").onclick=e=>{const b=e.target.closest("button");if(!b)return;cat=b.textContent;[...$("#chips").children].forEach(x=>x.classList.toggle("on",x==b));draw()};
+$("#q").oninput=draw;$("#sort").onchange=draw;
+function draw(){
+ const q=$("#q").value.trim().toLowerCase(),s=$("#sort").value;
+ let l=P.filter(p=>(cat=="All"||p.c==cat)&&(p.n+p.c).toLowerCase().includes(q));
+ if(s=="lo")l.sort((a,b)=>a.p-b.p);if(s=="hi")l.sort((a,b)=>b.p-a.p);if(s=="r")l.sort((a,b)=>b.r-a.r);
+ $("#grid").innerHTML=l.length?l.map(p=>`<article class="card"><div class="img" style="--g:linear-gradient(135deg,${p.g})"><span class="tag">${p.c}</span>${p.e}</div><div class="body"><h3>${p.n}</h3><div class="meta">★ ${p.r} rating</div><div class="foot"><span class="price">${money(p.p)}</span><button class="add" data-add="${p.id}" aria-label="Add ${p.n} to cart">Add</button></div></div></article>`).join(""):`<div class="empty">No products match your search.</div>`;
+}
+
+/* cart */
+const count=()=>Object.values(cart).reduce((a,b)=>a+b,0);
+const sub=()=>Object.entries(cart).reduce((a,[id,q])=>a+byId(id).p*q,0);
+function render(){
+ const ids=Object.keys(cart),s=sub(),sh=!ids.length||s>=FREE?0:SHIP;
+ $("#cnt").textContent=count();
+ $("#items").innerHTML=ids.length?ids.map(id=>{const p=byId(id);return `<div class="it"><div class="th" style="--g:linear-gradient(135deg,${p.g})">${p.e}</div><div class="in"><h4>${p.n}</h4><div class="meta">${money(p.p)}</div><div class="qty"><button data-q="${id}" data-d="-1" aria-label="Decrease">−</button><b>${cart[id]}</b><button data-q="${id}" data-d="1" aria-label="Increase">+</button><button class="rm" data-rm="${id}">Remove</button></div></div><b>${money(p.p*cart[id])}</b></div>`}).join(""):`<p class="empty" style="padding:50px 0">Your cart is empty.</p>`;
+ $("#sub").textContent=money(s);$("#ship").textContent=sh?money(sh):"Free";$("#tot").textContent=money(s+sh);
+ $("#note").textContent=ids.length&&s<FREE?`Add ${money(FREE-s)} more for free shipping`:ids.length?"🎉 You got free shipping!":"";
+ $("#co").disabled=!ids.length;save();
+}
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove("on"),1600)}
+function panel(o){$("#cart").classList.toggle("on",o);$("#ov").classList.toggle("on",o);$("#cart").setAttribute("aria-hidden",!o)}
+document.addEventListener("click",e=>{
+ const a=e.target.closest("[data-add]"),q=e.target.closest("[data-q]"),r=e.target.closest("[data-rm]");
+ if(a){cart[a.dataset.add]=(cart[a.dataset.add]||0)+1;render();toast(byId(a.dataset.add).n+" added to cart")}
+ if(q){const id=q.dataset.q;cart[id]+=+q.dataset.d;if(cart[id]<1)delete cart[id];render()}
+ if(r){delete cart[r.dataset.rm];render()}
+});
+$("#open").onclick=()=>panel(true);$("#close").onclick=$("#ov").onclick=()=>panel(false);
+addEventListener("keydown",e=>{if(e.key=="Escape")panel(false)});
+
+/* checkout */
+const dlg=$("#dlg");
+$("#co").onclick=()=>{
+ const s=sub(),t=s+(s>=FREE?0:SHIP);
+ $("#dbody").innerHTML=`<h3>Checkout · ${money(t)}</h3><form id="f">
+ <label for="nm">Full name</label><input id="nm" required autocomplete="name">
+ <label for="ph">Mobile number</label><input id="ph" type="tel" required autocomplete="tel">
+ <label for="ad">Delivery address</label><textarea id="ad" rows="2" required autocomplete="street-address"></textarea>
+ <label for="pm">Payment method</label><select id="pm"><option>Cash on delivery</option><option>GCash</option><option>Credit / debit card</option></select>
+ <div style="display:flex;gap:10px;margin-top:20px"><button type="button" class="btn" style="background:none;border:1px solid var(--line)" onclick="dlg.close()">Cancel</button><button class="btn">Place order</button></div></form>`;
+ dlg.showModal();
+ $("#f").onsubmit=ev=>{ev.preventDefault();
+  const no="BS-"+Math.floor(100000+Math.random()*900000),nm=$("#nm").value;
+  cart={};render();panel(false);
+  $("#dbody").innerHTML=`<div class="ok"><div class="big">✅</div><h3>Thank you, ${nm.replace(/[<>&]/g,"")}!</h3><p>Order <b>${no}</b> was placed. Total: ${money(t)}. This is a demo, so no payment was taken.</p><button class="btn" onclick="dlg.close()">Continue shopping</button></div>`;
+  };
+};
+draw();render();
+</script>
+</body>
+</html>

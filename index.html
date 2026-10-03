@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Michael | Web Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@600;700&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header><div class="wrap bar">
+  <a href="#home" class="logo"><b>&lt;/&gt;</b> BroCoder</a>
+  <nav id="nav" aria-label="Main">
+    <a href="#home">Home</a><a href="#about">About</a><a href="#services">Services</a><a href="#projects">Projects</a>
+  </nav>
+  <button class="btn pill" data-contact>Contact me</button>
+  <button class="menu" id="menu" aria-label="Toggle menu" aria-expanded="false">☰</button>
+</div></header>
+
+<main>
+<!-- HOME -->
+<section class="page" id="home">
+  <div class="hero"><div class="wrap">
+    <div>
+      <div class="tag">I'm a Web Developer</div>
+      <h1>Hi, I'm <span>Michael!</span></h1>
+      <p>I'm a passionate web developer specialize in building exceptional digital experience with modern technology</p>
+      <div class="cta">
+        <a href="#projects" class="btn main">View my Projects</a>
+        <a href="cv.pdf" class="btn ghost" download>Download CV</a>
+      </div>
+      <div class="tech"><small>TECHNOLOGIES WORK WITH</small>
+        <div class="icons">
+          <i style="background:#e44d26;color:#fff">H5</i><i style="background:#1572b6;color:#fff">C3</i><i style="background:#f7df1e;color:#111">JS</i><i style="background:#3178c6;color:#fff">TS</i><i style="background:#14202b;color:#61dafb">Re</i><i style="background:#1d2b1d;color:#6cc24a">No</i><i style="background:#f05032;color:#fff">Gt</i>
+        </div>
+      </div>
+    </div>
+    <div class="photo"><img class="me" alt="Portrait of Michael" src=""></div>
+  </div></div>
+
+  <div class="sec alt"><div class="wrap">
+    <div class="head"><span class="chip">Featured Projects</span><h2>Some of My Recent Work</h2></div>
+    <div class="cards snap" data-projects="3"></div><div class="dots"></div>
+  </div></div>
+
+  <div class="sec"><div class="wrap two">
+    <div>
+      <span class="chip">About Me</span>
+      <h2>I'm passionate about creating digital solutions</h2>
+      <p>With over 4 years of experience in web development, I bridge the gap between creative vision and functional reality. I specialize in building clean, scalable, and intuitive digital experiences that help businesses and individuals stand out online. Whether you're launching a new idea or refining an existing platform, I craft performance-driven solutions engineered to make an impact.</p>
+      <a href="#about" class="btn ghost" style="padding:9px 16px;font-size:.85rem">Learn More About Me</a>
+    </div>
+    <div class="stats" id="stats"></div>
+  </div></div>
+</section>
+
+<!-- ABOUT -->
+<section class="page" id="about">
+  <div class="about">
+    <div class="bio">
+      <div class="photo"><img class="me" alt="Portrait of Michael" src=""></div>
+      <p>Hi, I'm Michael. I'm a Web Developer dedicated to engineering clean, efficient, and user-centric digital solutions. With a focus on modern web technologies and full-stack development, I build responsive applications that balance robust backend logic with seamless frontend design.</p>
+      <p>My approach combines strong software architecture principles—from database structure and algorithm optimization to intuitive user interface design—ensuring every application I build is both performant and scalable. I thrive on translating complex requirements into simple, functional, and visually striking digital experiences.</p>
+      <p><b>Core Expertise:</b></p>
+      <ul>
+        <li>Frontend Engineering: Clean UI design, responsive interfaces, and interactive user flows.</li>
+        <li>Backend &amp; Systems: Efficient database design, RESTful APIs, and application logic.</li>
+        <li>Creative Execution: Precision visual assets, dark-mode aesthetics, and branded UI elements.</li>
+      </ul>
+    </div>
+    <div class="path">
+      <h2>Career &amp; Education Path</h2>
+      <div class="tl">
+        <div class="ti c1"><div class="ic">🎓</div><div><h3>EDUCATION</h3><b>BSIT Web &amp; Mobile Application Development</b><small>LSPU-LB 2020-2024</small></div></div>
+        <div class="ti c2"><div class="ic">🎓</div><div><h3>EDUCATION</h3><b>MIT Web &amp; Mobile Application Development</b><small>LSPU-LB 2025-Present</small></div></div>
+        <div class="ti c3"><div class="ic">💼</div><div><h3>CAREER</h3><b>Junior Web Developer</b><small>leads INC. 2024-Present</small></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="page" id="services">
+  <div class="sec"><div class="wrap">
+    <div class="head"><span class="chip">Capabilities</span><h2>Everything needed to move from idea to impact</h2><p>Flexible services for focused launches, complex product builds, and the long-term work that keeps them useful.</p></div>
+    <div class="svc" id="svc"></div>
+  </div></div>
+  <div class="sec alt"><div class="wrap">
+    <div class="head"><span class="chip">Simple process</span><h2>Clear steps. No black box.</h2><p>A collaborative path designed to keep decisions visible, momentum steady, and the final product grounded in real goals.</p></div>
+    <div class="steps" id="steps"></div>
+    <div class="cb">
+      <div><span class="chip">Have a project in mind?</span><h2>Let's build something useful together.</h2><p>Tell me where you are, what you're trying to solve, and what a great outcome looks like. I'll reply with clear next steps.</p></div>
+      <button class="btn" data-contact>Tell me about your project ↗</button>
+    </div>
+  </div></div>
+</section>
+
+<!-- PROJECTS -->
+<section class="page" id="projects">
+  <div class="sec"><div class="wrap">
+    <div class="head"><span class="chip">Featured Projects</span><h2>Some of My Recent Work</h2></div>
+    <div class="filters" id="filters"></div>
+    <div class="cards snap" id="allp"></div><div class="dots"></div>
+  </div></div>
+</section>
+</main>
+
+<footer>
+  <div class="cont wrap">
+    <h2>Lets Build Something New!</h2>
+    <div class="info">
+      <a href="mailto:tan.johnmichaelg10@gmail.com"><span class="dot">✉</span><u>tan.johnmichaelg10@gmail.com</u></a>
+      <div><span class="dot">f</span>John Michael Tan</div>
+      <div><span class="dot">☎</span><span><a href="tel:09271790459">09271790459</a><br><a href="tel:09618108276">09618108276</a></span></div>
+    </div>
+  </div>
+  <div class="copy">@2026 BroCoder, All Rights Reserved.</div>
+</footer>
+
+<dialog id="pd"><div class="shot" id="pdShot"></div><h3 id="pdT"></h3><p id="pdD"></p><div class="tg" id="pdTg"></div><div class="acts"><button class="btn ghost" data-close>Close</button></div></dialog>
+
+<dialog id="cd"><h3>Tell me about your project</h3><p>This opens your email app with the message ready to send.</p>
+  <form id="cf" method="dialog">
+    <label for="n">Your name</label><input id="n" required>
+    <label for="e">Your email</label><input id="e" type="email" required>
+    <label for="m">Project details</label><textarea id="m" required></textarea>
+    <div class="acts"><button type="button" class="btn ghost" data-close>Cancel</button><button class="btn main">Send message</button></div>
+  </form>
+</dialog>
+
+</body>
+<script src="script.js" defer></script>
+</html>
